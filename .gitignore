@@ -1,0 +1,17 @@
+# ambiente virtual
+.venv/
+venv/
+env/
+
+# cache python
+__pycache__/
+*.pyc
+
+# uploads
+uploads/
+
+# vscode
+.vscode/
+
+# sistema
+Thumbs.db

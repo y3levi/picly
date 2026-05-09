@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PICLY</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- sidebar -->
+    <aside class="sidebar">
+      <p class="sidebar-titulo">Filtros</p>
+      <div class="filtros">
+        <button class="filtro-btn" data-tags="solo">PFP</button>
+        <button class="filtro-btn" data-tags="animated">GIF</button>
+        <button class="filtro-btn" data-tags="wallpaper">Wallpaper</button>
+        <button class="filtro-btn" data-tags="2girls">Matching</button>
+        <button class="filtro-btn" data-tags="monochrome">Mangá</button>
+      </div>
+    </aside>
+
+    <!-- conteudo def -->
+    <main class="container">
+      <h1 class="logo">PICLY</h1>
+      <p class="sub">Busque Pics (artes) de personagens de anime (projeto em desenvolvimento.)</p>
+
+      <div class="search-box">
+  <div class="input-wrapper">
+    <input type="text" id="input-busca" placeholder="Ex: megumin, rem, naruto..." autocomplete="off"/>
+    <div id="dropdown" class="dropdown hidden"></div>
+  </div>
+  <button id="btn-buscar">Buscar</button>
+</div>
+
+      <div id="filtro-ativo" class="filtro-ativo-info"></div>
+      <div id="status"></div>
+      <div id="grid-resultados" class="grid"></div>
+    </main>
+
+  </div>
+
+  <!-- modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-fechar" id="modal-fechar">✕</button>
+      <div class="modal-corpo">
+        <div class="modal-esquerda">
+          <img id="modal-img" src="" alt="Imagem ampliada"/>
+          <span id="modal-fonte" class="modal-fonte-badge"></span>
+          <a id="modal-download" href="#" target="_blank">⬇ Baixar imagem</a>
+        </div>
+        <div class="modal-direita">
+          <p class="relacionadas-titulo">Imagens relacionadas</p>
+          <div id="grid-relacionadas" class="grid-relacionadas"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- masonry -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
