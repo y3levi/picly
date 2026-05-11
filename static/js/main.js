@@ -153,7 +153,6 @@ async function carregarMais() {
     status.textContent = 'Clique em uma imagem para ampliar.';
     paginaAtual++;
 
-    const novasImagens = [];
 
    let carregadas = 0;
     const total = itens.length;
@@ -179,7 +178,6 @@ async function carregarMais() {
       img.addEventListener('click', () => abrirModal(item));
       div.appendChild(img);
       grid.appendChild(div);
-      novasImagens.push(div);
     });
 
   } catch (err) {

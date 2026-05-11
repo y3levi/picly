@@ -2,6 +2,12 @@ from flask import Flask, render_template, request, jsonify, Response
 from sources import safebooru, danbooru, gelbooru, yandere, konachan, nekosia
 import requests
 import random
+from rembg import remove
+from PIL import Image
+import io
+import base64
+
+
 
 app = Flask(__name__)
 
@@ -91,6 +97,37 @@ def autocomplete():
         ])
     except:
         return jsonify([])
+
+@app.route('/processar')
+def processar():
+    url = request.args.get('url','')
+    operacao = request.args.get('op','rembg')
+
+    if not url:
+        return jsonify({'error': 'URL inválida'}), 400
+    
+    try:
+        #baixar
+        r = requests.get(url, timeout=15, headers={'User-Agent': 'PICLY/1.0'})
+        img_bytes = r.content
+
+        if operacao == 'rembg':
+        #removerfundo
+            resultado = remove(img_bytes)
+
+        #converter para base64
+        b64 = base64.b64encode(resultado).decode('utf-8')
+        return jsonify({'imagem': f'data:image/png;base64,{b64}'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
