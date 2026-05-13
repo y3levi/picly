@@ -11,6 +11,12 @@ const modalOverlay = document.getElementById('modal-overlay');
 const gridRelacionadas = document.getElementById('grid-relacionadas');
 const filtroBtns = document.querySelectorAll('.filtro-btn');
 const dropdown = document.getElementById('dropdown');
+const abaBtns = document.querySelectorAll('.aba-btn');
+const btnRembg = document.getElementById('btn-rembg');
+const previewEditado = document.getElementById('preview-editado');
+const imgEditada = document.getElementById('img-editada');
+const downloadEditado = document.getElementById('download-editado');
+const statusEdicao = document.getElementById('status-edicao');
 
 let debounceTimer = null;
 let paginaAtual = 1;
@@ -19,6 +25,7 @@ let filtroAtivo = '';
 let carregando = false;
 let semMais = false;
 let msnry = null;
+let urlImagemAtual = '';
 
 // autocomplete
 inputBusca.addEventListener('input', () => {
@@ -154,7 +161,7 @@ async function carregarMais() {
     paginaAtual++;
 
 
-   let carregadas = 0;
+    let carregadas = 0;
     const total = itens.length;
 
     itens.forEach(item => {
@@ -188,17 +195,49 @@ async function carregarMais() {
   carregando = false;
 }
 
-// modal
-function abrirModal(item) {
-  modalImg.src = item.url;
-  modalDownload.href = `/download?url=${encodeURIComponent(item.url)}`;
-  document.getElementById('modal-fonte').textContent = item.fonte;
-  gridRelacionadas.innerHTML = '<p style="color:#555; font-size:13px;">Carregando...</p>';
-  modal.classList.remove('hidden');
-  document.body.style.overflow = 'hidden';
-  carregarRelacionadas();
-}
+// modal stuff
 
+// abas do modal
+abaBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    abaBtns.forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+
+    document.querySelectorAll('.aba-conteudo').forEach(c => c.classList.add('hidden'));
+    document.getElementById(`aba-${btn.dataset.aba}`).classList.remove('hidden');
+  });
+});
+
+// rembg
+btnRembg.addEventListener('click', async () => {
+  if (!urlImagemAtual) return;
+
+  statusEdicao.textContent = 'Removendo fundo... pode demorar alguns segundos.';
+  btnRembg.disabled = true;
+  btnRembg.textContent = 'Processando...';
+  previewEditado.classList.add('hidden');
+
+  try {
+    const res = await fetch(`/processar?url=${encodeURIComponent(urlImagemAtual)}&op=rembg`);
+    const data = await res.json();
+
+    if (data.erro) {
+      statusEdicao.textContent = 'Erro ao processar imagem.';
+    } else {
+      imgEditada.src = data.imagem;
+      downloadEditado.href = data.imagem;
+      previewEditado.classList.remove('hidden');
+      statusEdicao.textContent = 'Pronto!';
+    }
+  } catch {
+    statusEdicao.textContent = 'Erro ao conectar com o servidor.';
+  }
+
+  btnRembg.disabled = false;
+  btnRembg.textContent = 'Aplicar';
+});
+
+// abrir modal
 function fecharModal() {
   modal.classList.add('hidden');
   modalImg.src = '';
@@ -231,4 +270,34 @@ async function carregarRelacionadas() {
   } catch {
     gridRelacionadas.innerHTML = '<p style="color:#555; font-size:13px;">Erro ao carregar.</p>';
   }
+}
+
+function abrirModal(item) {
+  urlImagemAtual = item.url;
+  modalImg.src = item.url;
+  modalDownload.href = `/download?url=${encodeURIComponent(item.url)}`;
+  document.getElementById('modal-fonte').textContent = item.fonte;
+
+  // reseta abas pro estado inicial
+  abaBtns.forEach(b => b.classList.remove('ativo'));
+  abaBtns[0].classList.add('ativo');
+  document.querySelectorAll('.aba-conteudo').forEach(c => c.classList.add('hidden'));
+  document.getElementById('aba-relacionadas').classList.remove('hidden');
+
+  // reseta editor
+  previewEditado.classList.add('hidden');
+  statusEdicao.textContent = '';
+  btnRembg.textContent = 'Aplicar';
+  btnRembg.disabled = false;
+  imgEditada.src = '';
+  downloadEditado.href = '#';
+  statusEdicao.textContent = '';
+  btnRembg.textContent = 'Aplicar';
+  btnRembg.disabled = false;
+
+
+  gridRelacionadas.innerHTML = '<p style="color:#555; font-size:13px;">Carregando...</p>';
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  carregarRelacionadas();
 }

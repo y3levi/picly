@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PICLY</title>
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
 
   <div class="layout">
@@ -28,12 +30,12 @@
       <p class="sub">Busque Pics (artes) de personagens de anime (projeto em desenvolvimento.)</p>
 
       <div class="search-box">
-  <div class="input-wrapper">
-    <input type="text" id="input-busca" placeholder="Ex: megumin, rem, naruto..." autocomplete="off"/>
-    <div id="dropdown" class="dropdown hidden"></div>
-  </div>
-  <button id="btn-buscar">Buscar</button>
-</div>
+        <div class="input-wrapper">
+          <input type="text" id="input-busca" placeholder="Ex: megumin, rem, naruto..." autocomplete="off" />
+          <div id="dropdown" class="dropdown hidden"></div>
+        </div>
+        <button id="btn-buscar">Buscar</button>
+      </div>
 
       <div id="filtro-ativo" class="filtro-ativo-info"></div>
       <div id="status"></div>
@@ -48,15 +50,39 @@
     <div class="modal-content">
       <button class="modal-fechar" id="modal-fechar">✕</button>
       <div class="modal-corpo">
+
         <div class="modal-esquerda">
-          <img id="modal-img" src="" alt="Imagem ampliada"/>
+          <img id="modal-img" src="" alt="Imagem ampliada" />
           <span id="modal-fonte" class="modal-fonte-badge"></span>
           <a id="modal-download" href="#" target="_blank">⬇ Baixar imagem</a>
         </div>
+
         <div class="modal-direita">
-          <p class="relacionadas-titulo">Imagens relacionadas</p>
-          <div id="grid-relacionadas" class="grid-relacionadas"></div>
+          <div class="abas">
+            <button class="aba-btn ativo" data-aba="relacionadas">Relacionadas</button>
+            <button class="aba-btn" data-aba="editar">Editar</button>
+          </div>
+
+          <div id="aba-relacionadas" class="aba-conteudo">
+            <div id="grid-relacionadas" class="grid-relacionadas"></div>
+          </div>
+
+          <div id="aba-editar" class="aba-conteudo hidden">
+            <div class="ferramenta">
+              <p class="ferramenta-nome">Remover Fundo</p>
+              <p class="ferramenta-desc">Remove o fundo da imagem usando IA.
+                (tenha em mente que imagens muito complexas ou com muitos detalhes podem não ter um resultado perfeito.)
+              </p>
+              <button id="btn-rembg">Aplicar</button>
+            </div>
+            <div id="preview-editado" class="preview-editado hidden">
+              <img id="img-editada" src="" alt="" />
+              <a id="download-editado" href="#" download="picly-pfp.png">Baixar editada</a>
+            </div>
+            <div id="status-edicao" class="status-edicao"></div>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -65,4 +91,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
   <script src="/static/js/main.js"></script>
 </body>
+
 </html>
