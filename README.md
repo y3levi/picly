@@ -10,6 +10,7 @@ anime art finder to create your perfect pfp
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![Flask](https://img.shields.io/badge/Flask-3.x-lightgrey)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow)
 
 </div>
 
@@ -34,6 +35,7 @@ o projeto ainda tá em desenvolvimento ativo, então a parte visual principalmen
 > imagens relacionadas no modal
 > download direto
 > badge mostrando a fonte da imagem
+> remoção de fundo com ia (rembg)
 ```
 
 ### fontes de imagem
@@ -50,7 +52,6 @@ o projeto ainda tá em desenvolvimento ativo, então a parte visual principalmen
 ### o que ainda vem
 
 ```
-> remoção de fundo com ia (rembg)
 > fundo preto + borda branca pra pfp
 > filtros de imagem (brilho, contraste, etc)
 > cropper de banner + avatar estilo discord/twitter
@@ -70,7 +71,7 @@ backend  -> Python, Flask
 frontend -> HTML5, CSS3, JavaScript puro
 layout   -> Masonry.js
 apis     -> Safebooru, Danbooru, Gelbooru, Yande.re, Konachan, Nekosia
-futuro   -> rembg, Pillow
+futuro   -> Pillow
 ```
 
 ### estrutura
@@ -140,6 +141,7 @@ the project is still under active development, so the visual side especially wil
 > related images inside the modal
 > direct download
 > source badge showing where each image came from
+> ai background removal (rembg)
 ```
 
 ### image sources
@@ -156,7 +158,6 @@ the project is still under active development, so the visual side especially wil
 ### what's coming
 
 ```
-> ai background removal (rembg)
 > black bg + white border for pfp generation
 > image filters (brightness, contrast, etc)
 > banner + avatar cropper discord/twitter style
@@ -172,7 +173,7 @@ backend  -> Python, Flask
 frontend -> HTML5, CSS3, Vanilla JavaScript
 layout   -> Masonry.js
 apis     -> Safebooru, Danbooru, Gelbooru, Yande.re, Konachan, Nekosia
-future   -> rembg, Pillow
+future   -> Pillow
 ```
 
 ### how to run
