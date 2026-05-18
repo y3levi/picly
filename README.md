@@ -31,10 +31,13 @@ o projeto ainda tá em desenvolvimento ativo, então a parte visual principalmen
 > grid estilo masonry (tipo pinterest)
 > scroll infinito
 > filtros de pesquisa
+> filtro sfw no backend
 > modal com a imagem ampliada
 > imagens relacionadas no modal
 > download direto
 > badge mostrando a fonte da imagem
+> buscas paralelas nas fontes
+> lazy loading nas imagens
 > remoção de fundo com ia (rembg)
 ```
 
@@ -45,6 +48,7 @@ o projeto ainda tá em desenvolvimento ativo, então a parte visual principalmen
 | Gelbooru   -> busca geral        | ativo
 | Yande.re   -> alta qualidade     | ativo
 | Konachan   -> wallpapers         | só no filtro wallpaper
+| Wallhaven  -> wallpapers         | só no filtro wallpaper
 | Nekosia    -> complementar sfw   | ativo
 | Danbooru   -> busca geral        | parcial
 ```
@@ -70,7 +74,7 @@ a ideia é o PICLY virar uma alternativa ao Pinterest com opções de edição p
 backend  -> Python, Flask
 frontend -> HTML5, CSS3, JavaScript puro
 layout   -> Masonry.js
-apis     -> Safebooru, Danbooru, Gelbooru, Yande.re, Konachan, Nekosia
+apis     -> Safebooru, Danbooru, Gelbooru, Yande.re, Konachan, Nekosia, Wallhaven
 futuro   -> Pillow
 ```
 
@@ -87,12 +91,15 @@ picly/
 |   \-- yandere.py
 |   \-- konachan.py
 |   \-- nekosia.py
+|   \-- wallhaven.py
+|   \-- safety.py
 \-- static/
 |   \-- css/style.css
 |   \-- js/main.js
 \-- templates/
 |   \-- index.html
 \-- uploads/
+\-- screenshots/
 ```
 
 ### como rodar
@@ -112,7 +119,9 @@ acessa em `http://127.0.0.1:5000`
 
 ### screenshots
 
-> prints em breve — visual ainda tá mudando bastante
+![inicio](screenshots/home.png)
+
+> visual ainda tá mudando bastante
 
 <!-- quando tiver:
 ![busca](screenshots/busca.png)
@@ -137,10 +146,13 @@ the project is still under active development, so the visual side especially wil
 > masonry grid layout (like pinterest)
 > infinite scroll
 > filters -> solo | animated | monochrome | wallpapers | 2girls
+> sfw filter on the backend
 > image modal with full size view
 > related images inside the modal
 > direct download
 > source badge showing where each image came from
+> parallel searches across sources
+> lazy loading for images
 > ai background removal (rembg)
 ```
 
@@ -151,6 +163,7 @@ the project is still under active development, so the visual side especially wil
 | Gelbooru   -> general search     | active
 | Yande.re   -> high quality       | active
 | Konachan   -> wallpapers         | wallpaper filter only
+| Wallhaven  -> wallpapers         | wallpaper filter only
 | Nekosia    -> sfw complementary  | active
 | Danbooru   -> general search     | partial
 ```
@@ -172,7 +185,7 @@ the project is still under active development, so the visual side especially wil
 backend  -> Python, Flask
 frontend -> HTML5, CSS3, Vanilla JavaScript
 layout   -> Masonry.js
-apis     -> Safebooru, Danbooru, Gelbooru, Yande.re, Konachan, Nekosia
+apis     -> Safebooru, Danbooru, Gelbooru, Yande.re, Konachan, Nekosia, Wallhaven
 future   -> Pillow
 ```
 
@@ -193,3 +206,4 @@ visit `http://127.0.0.1:5000`
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-yagoleviy3-blue)](https://www.linkedin.com/in/yagoleviy3/)
 [![GitHub](https://img.shields.io/badge/GitHub-y3levi-black)](https://github.com/y3levi)
+
