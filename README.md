@@ -117,6 +117,8 @@ python app.py
 
 acessa em `http://127.0.0.1:5000`
 
+pra atualizar, use `git pull` e depois `pip install -r requirements.txt`
+
 ### screenshots
 
 ![inicio](screenshots/home.png)
@@ -203,6 +205,8 @@ python app.py
 ```
 
 visit `http://127.0.0.1:5000`
+
+to update, use `git pull` and then `pip install -r requirements.txt`
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-yagoleviy3-blue)](https://www.linkedin.com/in/yagoleviy3/)
 [![GitHub](https://img.shields.io/badge/GitHub-y3levi-black)](https://github.com/y3levi)
