@@ -24,7 +24,13 @@ def buscar(tag, pagina=1, limite=10):
             for item in imagens:
                 url = item.get('image', {}).get('original', {}).get('url', '')
                 if url:
-                    resultados.append({'url': url, 'tipo': 'imagem', 'fonte': 'nekosia'})
+                    resultados.append({
+                        'url': url,
+                        'tipo': 'imagem',
+                        'fonte': 'nekosia',
+                        'tags': categoria,
+                        'rating': 'general'
+                    })
         return resultados
     except:
         return []

@@ -14,7 +14,13 @@ def buscar(tag, pagina=1, limite=30):
                 url = post.get('file_url', '')
                 if url and not url.endswith('.mp4') and not url.endswith('.zip'):
                     tipo = 'gif' if url.endswith('.gif') else 'imagem'
-                    resultados.append({'url': url, 'tipo': tipo, 'fonte': 'yandere'})
+                    resultados.append({
+                        'url': url,
+                        'tipo': tipo,
+                        'fonte': 'yandere',
+                        'tags': post.get('tags', ''),
+                        'rating': post.get('rating', 's')
+                    })
         return resultados
     except:
         return []

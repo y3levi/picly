@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify, Response
-from sources import safebooru, danbooru, gelbooru, yandere, konachan, nekosia
+from sources import safebooru, danbooru, gelbooru, yandere, konachan, nekosia, wallhaven
+from sources.safety import filtrar_resultados, is_safe_query
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 import random
 from rembg import remove, new_session
@@ -8,6 +10,22 @@ import io
 import base64
 
 app = Flask(__name__)
+
+def buscar_fontes(fontes):
+    resultados = []
+    with ThreadPoolExecutor(max_workers=len(fontes)) as executor:
+        futures = [
+            executor.submit(func, tag, pagina, limite)
+            for func, tag, pagina, limite in fontes
+        ]
+
+        for future in as_completed(futures):
+            try:
+                resultados += future.result()
+            except:
+                pass
+
+    return resultados
 session_anime = new_session('isnet-anime') # foco em personagens de animes e mangás
 
 @app.route('/')
@@ -22,24 +40,34 @@ def buscar():
 
     if not q:
         return jsonify([])
+    if not is_safe_query(q) or (filtro_tags and not is_safe_query(filtro_tags)):
+        return jsonify([])
 
     tag_personagem = q.replace(' ', '_')
     tag_final = f"{tag_personagem} {filtro_tags}".strip() if filtro_tags else tag_personagem
 
-    resultados = []
+    limite = 20
+    fontes = [
+        (safebooru.buscar, tag_final, pagina, limite),
+        (gelbooru.buscar, tag_final, pagina, limite),
+        (yandere.buscar, tag_final, pagina, limite),
+        (danbooru.buscar, tag_final, pagina, limite),
+    ]
 
-    # konachan limite em wallpapers.
+    # konachan e wallhaven apenas em wallpaper
     if 'wallpaper' in filtro_tags:
-        resultados += konachan.buscar(tag_personagem, pagina)
+        fontes += [
+            (konachan.buscar, tag_personagem, pagina, limite),
+            (wallhaven.buscar, tag_personagem, pagina, limite),
+        ]
 
-    resultados += safebooru.buscar(tag_final, pagina)
-    resultados += gelbooru.buscar(tag_final, pagina)
-    resultados += yandere.buscar(tag_final, pagina)
-    resultados += danbooru.buscar(tag_final, pagina)
+    resultados = buscar_fontes(fontes)
 
     # nekosia como busca reserva
     if len(resultados) < 10:
         resultados += nekosia.buscar(tag_personagem, pagina)
+
+    resultados = filtrar_resultados(resultados)
 
     #  deixar os resultados mais aleatorios
     random.shuffle(resultados)
@@ -51,11 +79,15 @@ def relacionadas():
     q = request.args.get('q', '').strip()
     if not q:
         return jsonify([])
+    if not is_safe_query(q):
+        return jsonify([])
 
     tag = q.replace(' ', '_')
-    resultados = []
-    resultados += safebooru.buscar(tag, 2)
-    resultados += gelbooru.buscar(tag, 2)
+    resultados = buscar_fontes([
+        (safebooru.buscar, tag, 2, 12),
+        (gelbooru.buscar, tag, 2, 12),
+    ])
+    resultados = filtrar_resultados(resultados)
     random.shuffle(resultados)
     return jsonify(resultados[:12])
 
@@ -92,7 +124,7 @@ def autocomplete():
         tags = r.json()
         return jsonify([
             {'tag': t['name'], 'count': t['post_count']}
-            for t in tags if t['post_count'] > 0
+            for t in tags if t['post_count'] > 0 and is_safe_query(t['name'])
         ])
     except:
         return jsonify([])

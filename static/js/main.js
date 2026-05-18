@@ -296,6 +296,8 @@ async function carregarMais() {
       const div = document.createElement("div");
       div.className = "grid-item";
       const img = document.createElement("img");
+      img.loading = "lazy";
+      img.decoding = "async";
       img.src = item.url;
 
       img.addEventListener("load", () => {
@@ -355,7 +357,7 @@ btnRembg.addEventListener("click", async () => {
     );
     const data = await res.json();
 
-    if (data.erro) {
+    if (!res.ok || data.error) {
       statusEdicao.textContent = "Erro ao processar imagem.";
     } else {
       imgEditada.src = data.imagem;

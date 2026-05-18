@@ -9,7 +9,7 @@ def buscar(tag, pagina=1, limite=30):
             'json': 1,
             'limit': limite,
             'pid': pagina - 1,
-            'tags': tag
+            'tags': f'{tag} rating:safe'
         }, timeout=10)
         posts = r.json()
         resultados = []
@@ -18,7 +18,13 @@ def buscar(tag, pagina=1, limite=30):
                 url = post.get('file_url', '')
                 if url and not url.endswith('.mp4'):
                     tipo = 'gif' if url.endswith('.gif') else 'imagem'
-                    resultados.append({'url': url, 'tipo': tipo, 'fonte': 'safebooru'})
+                    resultados.append({
+                        'url': url,
+                        'tipo': tipo,
+                        'fonte': 'safebooru',
+                        'tags': post.get('tags', ''),
+                        'rating': post.get('rating', 'safe')
+                    })
         return resultados
     except:
         return []
